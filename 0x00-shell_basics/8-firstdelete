@@ -1,2 +1,2 @@
 #!/bin/bash
-mv/tmp/betty...12.file/tmp/iamafile
+rm /tmp/my_first_directory/betty
