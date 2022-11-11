@@ -1,9 +1,6 @@
-# Web Stack debugging increase limit of open files per user
+# Fixes an nginx site that can't handle multiple concurrent requests
 exec { 'fix--for-nginx':
-  environment => ['DIR=/etc/default/nginx',
-                  'OLD=ULIMIT="-n 15"',
-                  'NEW=ULIMIT="-n 15000"'],
-  command     => 'sudo sed -i "s/$OLD/$NEW/" $DIR; sudo service nginx restart',
-  path        => ['/usr/bin', '/bin'],
-  returns     => [0, 1]
+  command => "bash -c \"sed -iE 's/^ULIMIT=.*/ULIMIT=\\\"-n 8192\\\"/' \
+/etc/default/nginx; service nginx restart\"",
+  path    => '/usr/bin:/usr/sbin:/bin'
 }
